@@ -1,0 +1,23 @@
+{
+  "name": "web3",
+  "version": "0.6",
+  "description": "aa util",
+  "scripts": {
+    "clean": "rm -rf cache artifacts",
+    "compile": "yarn hardhat compile",
+    "tsc": "tsc"
+  },
+  "keywords": [],
+  "author": "yukino.xin",
+  "license": "ISC",
+  "devDependencies": {
+    "hardhat": "^2.17.2",
+    "solhint": "^3.3.7",
+    "ts-node": ">=8.0.0"
+  },
+  "dependencies": {
+    "typescript": "^4.7.4",
+    "@account-abstraction/contracts": "0.6.0",
+    "@openzeppelin/contracts": "^4.9.3"
+  }
+}

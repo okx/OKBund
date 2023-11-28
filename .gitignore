@@ -1,0 +1,11 @@
+.idea
+*.iml
+**/target
+**/.env
+**/artifacts
+**/cache
+**/node_modules
+**/*.js
+**/leveldb/
+/ethereum/data
+.m2
