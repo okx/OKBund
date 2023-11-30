@@ -3,6 +3,6 @@ LABEL authors="yukino.xin"
 
 WORKDIR /app
 COPY ./ /app/
-RUN mvn clean package
+RUN mvn -s ./settings.xml clean package
 
 ENTRYPOINT ["java", "-jar","./aa-starter/target/aa-starter-0.0.1.jar"]
