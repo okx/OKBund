@@ -1,16 +1,21 @@
 # start a standlone bundler for testing.
 # bring up a the bundler with its own geth instance
 
-version: '2'
+version: '3'
 
 services:
   bundler:
-    image: txgyy/ok_bund:latest
+    image: maven:3.8.7-openjdk-18-slim
+    platform: linux/amd64
     ports:
       - '3000:3000'
     env_file:
       - test.env
-    entrypoint: [ "sh", "-c", "java -jar ./aa-starter/target/aa-starter-0.0.1.jar" ]
+    working_dir: /app
+    volumes:
+      - ./:/app/
+      - ./.m2/:/root/.m2/
+    entrypoint: [ "sh", "-c", "mvn -s ./settings.xml clean package && java -jar ./aa-starter/target/aa-starter-0.0.1.jar" ]
 
     depends_on:
       eth-node:
@@ -18,6 +23,7 @@ services:
 
   eth-node:
     container_name: geth-dev
+    platform: linux/amd64
     ports: [ '8545:8545' ]
     image: ethereum/client-go:release-1.10
     command: --verbosity 1
