@@ -168,6 +168,9 @@ public class DebugTraceCalResultProcessorV6 {
                     } else if (addr.equals(entityAddr)) {
                         // [STO-031]
                         requireStakeSlot = slot;
+                    } else if (!writes.containsKey(slot)) {
+                        // [STO-033]
+                        requireStakeSlot = slot;
                     } else {
                         String readWrite = writes.containsKey(addr) ? "write to" : "read from";
                         throw new AAException(new AAExceptionData(entityTitle, entStake.getAddr()), AAExceptionEnum.OPCODE_VALIDATION, "{} has forbidden {} {} slot {}", entityTitle, readWrite, nameAddr(addr, stakeInfoEntities), slot);

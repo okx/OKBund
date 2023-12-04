@@ -1,8 +1,9 @@
 package com.okcoin.dapp.bundler.task.schedule;
 
-import com.okcoin.dapp.bundler.pool.bundler.IBundleService;
+import com.okcoin.dapp.bundler.pool.bundler.ExecutionService;
 import com.okcoin.dapp.bundler.pool.config.PoolConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -19,28 +20,27 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class BundlerTask {
 
-
-    @Resource
-    private IBundleService bundleService;
     @Resource
     private PoolConfig poolConfig;
+
+    @Autowired
+    private ExecutionService executionService;
 
     @Scheduled(fixedDelay = 1, timeUnit = TimeUnit.SECONDS)
     public void sendUopOnChain() {
         if (!timeToExe()) {
             return;
         }
-        bundleService.sendNextBundle();
 
+        executionService.attemptBundle(true);
     }
 
     private boolean timeToExe() {
-        int defaultInterval = 10;
         int autoExeTime = poolConfig.getAutoBundleInterval();
         if (autoExeTime <= 0) {
-            autoExeTime = defaultInterval;
+            return false;
         }
-        int currSecond = Calendar.getInstance().get(Calendar.SECOND);
+        int currSecond = Calendar.getInstance().get(Calendar.MILLISECOND);
         return currSecond % autoExeTime == 0;
     }
 
