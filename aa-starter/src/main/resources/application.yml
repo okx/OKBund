@@ -1,7 +1,7 @@
 server:
   port: 3000
   address: 0.0.0.0
-  env: ${BUNDLER_ENV:dev}
+  env: ${BUNDLER_ENV:test}
 
 spring:
   jackson:
